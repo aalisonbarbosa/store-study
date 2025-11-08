@@ -4,8 +4,8 @@ import "./globals.css";
 
 const inter = Inter({
   weight: ["400", "700"],
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Store Study",
@@ -19,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br" className={inter.className}>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

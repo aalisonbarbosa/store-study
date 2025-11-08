@@ -1,24 +1,48 @@
 import Header from "@/components/admin-header";
 import SideBar from "@/components/sidebar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import { Inter } from "next/font/google";
 
-export default function AdminLayout({
-    children,
+const inter = Inter({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+export default async function AdminLayout({
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    const user = { name: "alison", role: "ADMIN" } as const;
+  const session = await getServerSession(authOptions);
 
-    return (
-        <html>
-            <body>
-                <div className="grid grid-cols-5">
-                    <SideBar user={user} />
-                    <div className="col-span-4 bg-stone-100 min-h-screen space-y-8">
-                        <Header />
-                        {children}
-                    </div>
-                </div>
-            </body>
-        </html>
-    );
+  if (!session) {
+    redirect("/");
+  } else {
+    switch (session.user.role) {
+      case "CUSTOMER":
+        redirect("/");
+
+      case "SELLER":
+        redirect("/seller/dashboard");
+
+      default:
+        break;
+    }
+  }
+
+  return (
+    <html lang="pt-br" className={inter.className}>
+      <body>
+        <div className="grid grid-cols-5">
+          <SideBar user={{ name: session.user.name!, role: "ADMIN" }} />
+          <div className="col-span-4 bg-stone-100 min-h-screen space-y-8">
+            <Header />
+            {children}
+          </div>
+        </div>
+      </body>
+    </html>
+  );
 }

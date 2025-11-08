@@ -1,16 +1,42 @@
 import Header from "@/components/client-header";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import { Inter } from "next/font/google";
 
-export default function ClientLayout({
-    children,
+const inter = Inter({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
+
+export default async function ClientLayout({
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html>
-            <body>
-                <Header />
-                <main className="bg-stone-100 min-h-[calc(100vh-80px)] px-16 py-8 space-y-8">{children}</main>
-            </body>
-        </html>
-    );
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    switch (session.user.role) {
+      case "ADMIN":
+        redirect("/admin/dashboard");
+
+      case "SELLER":
+        redirect("/seller/dashboard");
+
+      default:
+        break;
+    }
+  }
+
+  return (
+    <html lang="pt-br" className={inter.className}>
+      <body>
+        <Header />
+        <main className="bg-stone-100 min-h-[calc(100vh-80px)] px-16 py-8 space-y-8">
+          {children}
+        </main>
+      </body>
+    </html>
+  );
 }
