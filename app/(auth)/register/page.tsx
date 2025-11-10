@@ -1,8 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -35,21 +34,17 @@ export default function registerPage() {
 
   const router = useRouter();
 
-  async function onSubmit(formData: UserSchema) {
-    try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, formData);
-
-      router.push("/login");
-    } catch (err) {
-      console.error(err);
-      if (axios.isAxiosError(err)) {
+  function onSubmit(formData: UserSchema) {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/register`, formData)
+      .then(() => router.push("/login"))
+      .catch((err: AxiosError) => {
         if (err.response?.status === 409) {
           setError("email", { message: "Email já está em uso." });
+        } else {
+          setError("root", { message: "Erro interno no servidor." });
         }
-      } else {
-        setError("root", { message: "Erro interno no servidor." });
-      }
-    }
+      });
   }
 
   return (

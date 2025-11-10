@@ -8,11 +8,7 @@ export default async function ProfilePage() {
 
   if (!session) redirect("/");
 
-  const user = {
-    name: "alison barbosa",
-    email: "alison@gmail.com",
-    createAt: "26/10/2025",
-  };
+  const user = session.user;
 
   return (
     <>
@@ -24,7 +20,7 @@ export default async function ProfilePage() {
             <User className="text-blue-700" size={64} />
           </div>
           <div className="">
-            <h3 className="font-bold text-md">{user.name}</h3>
+            <h3 className="font-bold text-md capitalize">{user.name}</h3>
             <p className="text-sm text-stone-400">
               Cliente desde {user.createAt}
             </p>
@@ -40,7 +36,7 @@ export default async function ProfilePage() {
               <input
                 type="text"
                 className="border-2 border-stone-200 rounded-md py-2 px-4 focus:outline-blue-400"
-                defaultValue={user.name}
+                defaultValue={user.name!}
                 id="name"
               />
             </div>
@@ -52,7 +48,7 @@ export default async function ProfilePage() {
                 type="email"
                 id="email"
                 className="border-2 border-stone-200 rounded-md py-2 px-4 focus:outline-blue-400"
-                defaultValue={user.email}
+                defaultValue={user.email!}
               />
             </div>
             <div className="flex flex-col gap-2">

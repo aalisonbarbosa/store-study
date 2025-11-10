@@ -1,3 +1,11 @@
-export default function ProductsPage(){
-    return <h1>seller ProductsPage</h1>
+import Link from "next/link";
+
+export default function ProductsPage() {
+  return (
+    <div>
+      <div>
+        <Link href="/seller/products/new">Adicionar produto</Link>
+      </div>
+    </div>
+  );
 }
