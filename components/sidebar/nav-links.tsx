@@ -29,7 +29,7 @@ export default function NavLinks({ user }: { user: IUser }) {
 
   const links: ILinks[] = [
     {
-      href: "/admin/dashboard",
+      href: "/admin",
       label: "Dashboard",
       icon: LayoutPanelTop,
       role: "ADMIN",
@@ -54,7 +54,7 @@ export default function NavLinks({ user }: { user: IUser }) {
     },
     { href: "/admin/profile", label: "Perfil", icon: User, role: "ADMIN" },
     {
-      href: "/seller/dashboard",
+      href: "/seller",
       label: "Dashboard",
       icon: LayoutPanelTop,
       role: "SELLER",

@@ -25,7 +25,7 @@ export default async function AdminLayout({
         redirect("/");
 
       case "SELLER":
-        redirect("/seller/dashboard");
+        redirect("/seller");
 
       default:
         break;
@@ -37,7 +37,7 @@ export default async function AdminLayout({
       <body>
         <div className="grid grid-cols-5">
           <SideBar user={{ name: session.user.name!, role: "ADMIN" }} />
-          <div className="col-span-4 bg-stone-100 min-h-screen space-y-8">
+          <div className="col-span-4 bg-stone-100 min-h-screen">
             <Header />
             {children}
           </div>

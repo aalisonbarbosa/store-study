@@ -6,7 +6,6 @@ export default function Title() {
     const path = usePathname().split("/")[2];
 
     const titles: Record<string, string> = {
-        dashboard: "Dashboard",
         products: "Meus produtos",
         orders: "Pedidos",
         requests: "Solicitações de produtos",
@@ -14,5 +13,5 @@ export default function Title() {
     };
 
 
-    return <h1 className="font-bold text-xl">{titles[path]}</h1>;
+    return <h1 className="font-bold text-xl">{titles[path] || "Dashboard"}</h1>;
 }

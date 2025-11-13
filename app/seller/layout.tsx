@@ -25,7 +25,7 @@ export default async function SellerLayout({
         redirect("/");
 
       case "ADMIN":
-        redirect("/admin/dashboard");
+        redirect("/admin");
 
       default:
         break;

@@ -29,7 +29,7 @@ export default function LoginPage() {
       });
 
       if (!res?.ok) {
-        setError("root", { message: "Email ou senha inválidos" });
+        setError("root", { message: "Email ou senha inválidos." });
         return;
       }
 
@@ -37,7 +37,7 @@ export default function LoginPage() {
     } catch (err) {
       console.error(err);
       setError("root", {
-        message: "Erro inesperado no servidor. Tente novamente mais tarde.",
+        message: "Erro inesperado no servidor.",
       });
     }
   }

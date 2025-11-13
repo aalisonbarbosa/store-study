@@ -1,5 +1,6 @@
 "use client";
 
+import { createProduct } from "@/app/actions/products";
 import {
   CreateProductSchema,
   createProductSchema,
@@ -43,16 +44,7 @@ export default function ProductForm() {
     formData.append("image", data.image[0]);
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${session?.user.accessToken}`,
-          },
-        }
-      );
+      await createProduct(formData, session?.user.accessToken!);
 
       router.push(
         `${session?.user.role === "SELLER" ? "/seller" : "/admin"}/products`
@@ -192,12 +184,14 @@ export default function ProductForm() {
 
       <div className="flex justify-between items-center">
         <button
-          className="bg-blue-700 text-white py-2 px-4 rounded-md w-full"
+          className="bg-blue-700 text-white py-2 px-4 rounded-md w-full cursor-pointer"
           type="submit"
           disabled={isSubmitting}
         >
           {isSubmitting
             ? "Carregando..."
+            : session?.user.role === "ADMIN"
+            ? "Adicionar produto"
             : "Enviar para aprovação do administrador"}
         </button>
         <Link

@@ -19,10 +19,10 @@ export default async function ClientLayout({
   if (session) {
     switch (session.user.role) {
       case "ADMIN":
-        redirect("/admin/dashboard");
+        redirect("/admin");
 
       case "SELLER":
-        redirect("/seller/dashboard");
+        redirect("/seller");
 
       default:
         break;
