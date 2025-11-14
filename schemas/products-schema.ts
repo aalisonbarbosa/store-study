@@ -17,3 +17,9 @@ export const createProductSchema = z.object({
 });
 
 export type CreateProductSchema = z.infer<typeof createProductSchema>;
+
+export const rejectProductSchema = z.object({
+  reason: z.string().min(1, "O motivo é obrigatório."),
+});
+
+export type RejectProductSchema = z.infer<typeof rejectProductSchema>;

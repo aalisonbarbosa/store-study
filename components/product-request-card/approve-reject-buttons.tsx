@@ -1,25 +1,17 @@
 "use client";
 
 import { approveProduct, rejectProduct } from "@/actions/products";
+import { rejectProductSchema, RejectProductSchema } from "@/schemas/products-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
 
-const rejectProductSchema = z.object({
-  reason: z.string().min(1, "O motivo é obrigatório."),
-});
-
-type RejectProductSchema = z.infer<typeof rejectProductSchema>;
-
-export default function ApproveRejectButtons({
-  productId,
-  token,
-}: {
+interface Props {
   productId: string;
-  token: string;
-}) {
+}
+
+export default function ApproveRejectButtons({ productId }: Props) {
   const {
     register,
     handleSubmit,
@@ -32,7 +24,7 @@ export default function ApproveRejectButtons({
 
   async function onsubmit(formData: RejectProductSchema) {
     try {
-      await rejectProduct(productId, token, formData.reason);
+      await rejectProduct(productId, formData.reason);
     } catch (err) {
       console.error(err);
       setError("root", { message: "Erro interno no servidor." });
@@ -44,7 +36,7 @@ export default function ApproveRejectButtons({
   return (
     <>
       <button
-        onClick={() => approveProduct(productId, token)}
+        onClick={() => approveProduct(productId)}
         className="flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-md cursor-pointer"
       >
         <Check /> Aprovar

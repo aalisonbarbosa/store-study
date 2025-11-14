@@ -14,9 +14,7 @@ interface IProduct {
 
 export default async function RequestsPage() {
   const session = await getServerSession(authOptions);
-  const products: IProduct[] | [] = await getPendingProduct(
-    session?.user.accessToken!
-  );
+  const products: IProduct[] | [] = await getPendingProduct();
 
   return (
     <div className="p-8 space-y-8 min-h-[calc(100vh-80px)]">

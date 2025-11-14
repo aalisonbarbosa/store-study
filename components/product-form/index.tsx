@@ -8,7 +8,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Upload } from "lucide-react";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,8 +18,11 @@ interface ICategory {
   name: string;
 }
 
-export default function ProductForm() {
-  const { data: session } = useSession();
+interface Props {
+  role: string;
+}
+
+export default function ProductForm({ role }: Props) {
   const router = useRouter();
 
   const {
@@ -46,9 +48,7 @@ export default function ProductForm() {
     try {
       await createProduct(formData);
 
-      router.push(
-        `${session?.user.role === "SELLER" ? "/seller" : "/admin"}/products`
-      );
+      router.push(`${role === "ADMIN" ? "/admin" : "/seller"}/products`);
     } catch (err) {
       console.error(err);
       setError("root", { message: "Erro ao criar produto." });
@@ -190,7 +190,7 @@ export default function ProductForm() {
         >
           {isSubmitting
             ? "Carregando..."
-            : session?.user.role === "ADMIN"
+            : role === "ADMIN"
             ? "Adicionar produto"
             : "Enviar para aprovação"}
         </button>

@@ -43,7 +43,7 @@ export default function ProductRequestCard({
         </div>
       </div>
       <div className="relative flex items-center justify-center gap-4 w-1/4">
-        <ApproveRejectButtons productId={product.id} token={token} />
+        <ApproveRejectButtons productId={product.id} />
       </div>
     </div>
   );

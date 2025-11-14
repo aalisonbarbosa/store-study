@@ -2,18 +2,7 @@
 
 import { revalidateTag } from "next/cache";
 import axios from "axios";
-import { getServerSession, Session } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
-async function getSession(): Promise<Session> {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error("Sessão inexistente: usuário não autenticado.");
-  }
-
-  return session;
-}
+import { getSession } from "@/lib/auth";
 
 export async function createProduct(formData: FormData) {
   const session = await getSession();
@@ -65,12 +54,14 @@ export async function getProductsByUser() {
   return products;
 }
 
-export async function getPendingProduct(token: string) {
+export async function getPendingProduct() {
+  const session = await getSession();
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/products/request`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${session.user.accessToken}`,
       },
       cache: "force-cache",
       next: { tags: ["products"] },
@@ -87,24 +78,26 @@ export async function getPendingProduct(token: string) {
   return products;
 }
 
-export async function approveProduct(id: string, token: string) {
+export async function approveProduct(id: string) {
+  const session = await getSession();
+
   await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}/approve`, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${session.user.accessToken}`,
     },
   });
 
   revalidateTag("products");
 }
 
-export async function rejectProduct(id: string, token: string, reason: string) {
-  console.log("chamou rejectProduct", { id, token, reason });
+export async function rejectProduct(id: string, reason: string) {
+  const session = await getSession();
 
   await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}/reject`, {
     method: "PUT",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${session.user.accessToken}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ reason }),

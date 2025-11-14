@@ -1,26 +1,11 @@
 "use client";
 
+import { registerSchema, RegisterSchema } from "@/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import z from "zod";
-
-const userSchema = z
-  .object({
-    name: z.string().min(1, "Nome é obrigatório."),
-    email: z.string().email("Email inválido."),
-    password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres."),
-    confirmPassword: z.string(),
-    role: z.enum(["CUSTOMER", "SELLER"], "Tipo da conta é obrigatório."),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas não coincidem.",
-    path: ["confirmPassword"],
-  });
-
-type UserSchema = z.infer<typeof userSchema>;
 
 export default function registerPage() {
   const {
@@ -29,12 +14,12 @@ export default function registerPage() {
     setError,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(userSchema),
+    resolver: zodResolver(registerSchema),
   });
 
   const router = useRouter();
 
-  function onSubmit(formData: UserSchema) {
+  function onSubmit(formData: RegisterSchema) {
     axios
       .post(`${process.env.NEXT_PUBLIC_API_URL}/register`, formData)
       .then(() => router.push("/login"))

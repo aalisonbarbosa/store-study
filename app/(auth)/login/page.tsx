@@ -1,6 +1,6 @@
 "use client";
 
-import { loginSchema, LoginSchema } from "@/schemas/login-schema";
+import { loginSchema, LoginSchema } from "@/schemas/auth-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon } from "lucide-react";
 import { signIn } from "next-auth/react";
