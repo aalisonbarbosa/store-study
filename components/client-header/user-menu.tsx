@@ -17,7 +17,7 @@ export default function UserMenu() {
         <User className="text-blue-700" />
       </button>
       {isOpen && (
-        <div className="absolute top-12 right-0 bg-white w-40 p-4 rounded-lg shadow">
+        <div className="absolute top-12 right-0 bg-white w-40 p-4 rounded-lg shadow z-10">
           <ul className="space-y-4">
             <li className="hover:text-blue-500 duration-200">
               <Link href="/profile">Meu Perfil</Link>

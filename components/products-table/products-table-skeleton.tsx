@@ -1,9 +1,9 @@
 export function ProductsTableSkeleton() {
   return (
     <div className="w-full animate-pulse">
-      <div className="overflow-hidden rounded-xl border border-gray-200">
+      <div className="overflow-hidden rounded-xl border border-stone-200">
         <table className="w-full border-collapse">
-          <thead className="bg-gray-100">
+          <thead className="bg-stone-100">
             <tr>
               {["Produto", "Preço", "Status", "Vendedor", "Ações"].map(
                 (header, i) => (

@@ -15,11 +15,9 @@ export default function ProductsPage() {
           Adicionar produto
         </Link>
       </div>
-      <div>
-        <Suspense fallback={<ProductsTableSkeleton />}>
-          <ProductsTable />
-        </Suspense>
-      </div>
+      <Suspense fallback={<ProductsTableSkeleton />}>
+        <ProductsTable />
+      </Suspense>
     </div>
   );
 }

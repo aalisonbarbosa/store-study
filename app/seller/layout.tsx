@@ -39,7 +39,7 @@ export default async function SellerLayout({
           <SideBar user={{ name: session.user.name!, role: "SELLER" }} />
           <div className="col-span-4">
             <Header />
-            <div className="min-h-[calc(100vh-80px)] bg-stone-100">
+            <div className="min-h-[calc(100vh-80px)] bg-stone-50">
               {children}
             </div>
           </div>

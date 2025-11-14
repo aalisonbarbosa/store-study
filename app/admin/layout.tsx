@@ -37,7 +37,7 @@ export default async function AdminLayout({
       <body>
         <div className="grid grid-cols-5">
           <SideBar user={{ name: session.user.name!, role: "ADMIN" }} />
-          <div className="col-span-4 bg-stone-100 min-h-screen">
+          <div className="col-span-4 bg-stone-50 min-h-screen">
             <Header />
             {children}
           </div>

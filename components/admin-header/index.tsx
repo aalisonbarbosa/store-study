@@ -3,18 +3,15 @@ import Title from "./title";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center bg-white h-20 px-4 shadow">
+    <header className="flex justify-between items-center bg-white h-20 px-4 border-b-2 border-stone-200">
       <Title />
 
       <div className="flex items-center gap-4">
         <button className="cursor-pointer">
           <Bell />
         </button>
-        <button className="flex items-center gap-2 cursor-pointer">
-          <div className="bg-blue-200 text-blue-700 rounded-full p-2">
-            <Store />
-          </div>
-          <p>name</p>
+        <button className="bg-blue-200 text-blue-700 rounded-full p-2 cursor-pointer">
+          <Store />
         </button>
       </div>
     </header>

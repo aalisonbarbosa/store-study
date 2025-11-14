@@ -1,41 +1,21 @@
+import { getApprovedProducts } from "@/actions/products";
 import FiltersPanel from "@/components/filters-panel";
 import ProductCard from "@/components/product-card";
 
-interface Product {
-  name: string;
-  category: string;
+interface IProduct {
+  id: string;
+  title: string;
+  imageUrl: string;
+  Category: {
+    id: string;
+    name: string;
+  };
   price: number;
 }
 
-const products: Product[] = [
-  {
-    name: "produto1",
-    category: "eletronico",
-    price: 1024,
-  },
-  {
-    name: "produto2",
-    category: "eletronico",
-    price: 1499,
-  },
-  {
-    name: "produto3",
-    category: "eletronico",
-    price: 133,
-  },
-  {
-    name: "produto4",
-    category: "eletronico",
-    price: 123,
-  },
-  {
-    name: "produto5",
-    category: "eletronico",
-    price: 1257,
-  },
-];
+export default async function Home() {
+  const products: IProduct[] | [] = await getApprovedProducts();
 
-export default function Home() {
   return (
     <div className="flex justify-between gap-8">
       <div className="w-1/4">

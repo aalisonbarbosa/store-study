@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct } from "@/app/actions/products";
+import { createProduct } from "@/actions/products";
 import {
   CreateProductSchema,
   createProductSchema,
@@ -44,7 +44,7 @@ export default function ProductForm() {
     formData.append("image", data.image[0]);
 
     try {
-      await createProduct(formData, session?.user.accessToken!);
+      await createProduct(formData);
 
       router.push(
         `${session?.user.role === "SELLER" ? "/seller" : "/admin"}/products`
@@ -182,7 +182,7 @@ export default function ProductForm() {
         )}
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center gap-4">
         <button
           className="bg-blue-700 text-white py-2 px-4 rounded-md w-full cursor-pointer"
           type="submit"
@@ -192,7 +192,7 @@ export default function ProductForm() {
             ? "Carregando..."
             : session?.user.role === "ADMIN"
             ? "Adicionar produto"
-            : "Enviar para aprovação do administrador"}
+            : "Enviar para aprovação"}
         </button>
         <Link
           href="/seller/products"
