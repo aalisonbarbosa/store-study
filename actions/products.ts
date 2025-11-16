@@ -1,17 +1,17 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import axios from "axios";
 import { getSession } from "@/lib/auth";
 
 export async function createProduct(formData: FormData) {
   const session = await getSession();
 
-  await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/products`, formData, {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
+    method: "POST",
     headers: {
-      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${session.user.accessToken}`,
     },
+    body: formData,
   });
 
   revalidateTag("products");
@@ -25,7 +25,7 @@ export async function getApprovedProducts() {
 
   if (!res.ok) return [];
 
-  const products = res.json();
+  const products = await res.json();
 
   return products;
 }

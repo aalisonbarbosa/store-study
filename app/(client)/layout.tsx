@@ -33,7 +33,7 @@ export default async function ClientLayout({
     <html lang="pt-br" className={inter.className}>
       <body>
         <Header />
-        <main className="bg-stone-100 min-h-[calc(100vh-80px)] px-16 py-8 space-y-8">
+        <main className="bg-stone-50 min-h-[calc(100vh-80px)] px-16 py-8 space-y-8">
           {children}
         </main>
       </body>

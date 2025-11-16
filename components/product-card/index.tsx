@@ -17,7 +17,7 @@ interface IProduct {
 
 export default function ProductCard({ product }: IProduct) {
   return (
-    <Link href={`/product/${product.id}`} className="w-full h-96 rounded-lg hover:shadow-xl duration-300 bg-white border-2 border-stone-200">
+    <div className="w-full h-96 rounded-lg hover:shadow-xl duration-300 bg-white border-2 border-stone-200">
       <div className="w-full h-3/5 rounded-t-lg overflow-hidden relative">
         <Image
           src={product.imageUrl}
@@ -30,15 +30,18 @@ export default function ProductCard({ product }: IProduct) {
       <div className="flex justify-center items-center p-4 h-2/5">
         <div className="space-y-1 w-full">
           <h3 className="font-bold">{product.title}</h3>
-          <p className="text-sm">{product.Category.name}</p>
+          <p className="text-sm text-stone-500">{product.Category.name}</p>
           <div className="flex justify-between items-center">
             <span className="text-blue-700 font-bold text-xl">
-              R$ {product.price}
+              {product.price.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
             </span>
-            <AddToCart />
+            <AddToCart productId={product.id} />
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

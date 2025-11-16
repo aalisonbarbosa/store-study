@@ -3,7 +3,7 @@ import Title from "./title";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center bg-white h-20 px-4 border-b-2 border-stone-200">
+    <header className="flex justify-between items-center bg-white h-20 px-4 border-b border-stone-200">
       <Title />
 
       <div className="flex items-center gap-4">
