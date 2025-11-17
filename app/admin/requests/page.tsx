@@ -1,20 +1,9 @@
-import { getPendingProduct } from "@/actions/products";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import ProductRequestCard from "@/components/product-request-card";
-import { getServerSession } from "next-auth";
+import { getPendingProduct } from "@/modules/products";
 
-interface IProduct {
-  id: string;
-  imageUrl: string;
-  title: string;
-  owner: string;
-  description: string;
-  price: number;
-}
+import ProductRequestCard from "@/components/admin/product-request-card";
 
 export default async function RequestsPage() {
-  const session = await getServerSession(authOptions);
-  const products: IProduct[] | [] = await getPendingProduct();
+  const products = await getPendingProduct();
 
   return (
     <div className="p-8 space-y-8 min-h-[calc(100vh-80px)]">
@@ -23,7 +12,7 @@ export default async function RequestsPage() {
       <div className="space-y-4">
         {products.length === 0 && <p>Nenhum produto encontrado.</p>}
         {products.map((p) => (
-          <ProductRequestCard product={p} token={session?.user.accessToken!} key={p.id} />
+          <ProductRequestCard product={p} key={p.id} />
         ))}
       </div>
     </div>

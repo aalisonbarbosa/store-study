@@ -1,43 +1,28 @@
-import { getCart } from "@/actions/cart";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import CartItem from "@/components/cart-item";
-import { ShoppingCart } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
 
-interface ICart {
-  id: string;
-  cartId: string;
-  productId: string;
-  quantity: number;
-  CartItem: {
-    id: string;
-    cartId: string;
-    productId: string;
-    quantity: number;
-    Product: {
-      id: string;
-      title: string;
-      price: number;
-      imageUrl: string;
-    };
-  }[];
-}
+import { getCart } from "@/modules/cart/actions/get-cart";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+import { CartBase } from "@/modules/cart";
+
+import CartItem from "@/components/client/cart-item";
 
 export default async function CartPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) redirect("/");
 
-  const cart: ICart = await getCart();
+  const cart: CartBase | null = await getCart();
 
-  const total = cart.CartItem.reduce(
+  const total = cart?.CartItem.reduce(
     (ac, c) => ac + c.Product.price * c.quantity,
     0
   );
 
-  if (cart.CartItem.length === 0) {
+  if (!cart || cart.CartItem.length === 0) {
     return (
       <>
         <h1 className="text-xl font-bold">Carrinho de Compras</h1>
@@ -65,7 +50,7 @@ export default async function CartPage() {
       <h1 className="text-xl font-bold">Carrinho de Compras</h1>
       <div className="bg-white border border-stone-200 rounded-md">
         <div className="space-y-4 p-8 ">
-          {cart.CartItem.map((item) => (
+          {cart?.CartItem.map((item) => (
             <CartItem item={item} key={item.id} />
           ))}
         </div>
@@ -73,7 +58,7 @@ export default async function CartPage() {
           <div className="flex justify-between items-center">
             <h3 className="font-bold text-lg">Total:</h3>
             <span className="text-blue-700 font-semibold text-xl">
-              {total.toLocaleString("pt-br", {
+              {total?.toLocaleString("pt-br", {
                 style: "currency",
                 currency: "BRL",
               })}

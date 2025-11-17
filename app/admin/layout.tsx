@@ -1,5 +1,5 @@
-import Header from "@/components/admin-header";
-import SideBar from "@/components/sidebar";
+import Header from "@/components/admin/admin-header";
+import SideBar from "@/components/shared/sidebar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";

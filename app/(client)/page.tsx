@@ -1,20 +1,12 @@
-import { getApprovedProducts } from "@/actions/products";
-import FiltersPanel from "@/components/filters-panel";
-import ProductCard from "@/components/product-card";
+import { getApprovedProducts } from "@/modules/products";
 
-interface IProduct {
-  id: string;
-  title: string;
-  imageUrl: string;
-  Category: {
-    id: string;
-    name: string;
-  };
-  price: number;
-}
+import { ProductCard as IProductCard } from "@/modules/products";
+
+import FiltersPanel from "@/components/client/filters-panel";
+import ProductCard from "@/components/client/product-card";
 
 export default async function Home() {
-  const products: IProduct[] | [] = await getApprovedProducts();
+  const products: IProductCard[] = await getApprovedProducts();
 
   return (
     <div className="flex justify-between gap-8">
@@ -22,8 +14,8 @@ export default async function Home() {
         <FiltersPanel />
       </div>
       <div className="grid grid-cols-3 gap-8 w-3/4">
-        {products.map((p, i) => (
-          <ProductCard product={p} key={i} />
+        {products.map((p) => (
+          <ProductCard product={p} key={p.id} />
         ))}
       </div>
     </div>
