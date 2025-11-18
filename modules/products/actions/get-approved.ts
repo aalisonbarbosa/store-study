@@ -5,8 +5,7 @@ import { ProductBase } from "../types/product-base";
 export async function getApprovedProducts(): Promise<ProductBase[]> {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, {
-      cache: "force-cache",
-      next: { tags: ["products-approved"] },
+      cache: "no-store",
     });
 
     if (!res.ok) {

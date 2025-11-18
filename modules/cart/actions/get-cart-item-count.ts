@@ -1,10 +1,12 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 
-export async function getCartItemCount(): Promise<number> {
+export async function getCartItemCount(): Promise<number | null> {
   try {
     const session = await getSession();
+
+    if (!session?.user.accessToken) return null;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/count`, {
       headers: {
@@ -16,7 +18,7 @@ export async function getCartItemCount(): Promise<number> {
 
     if (!res.ok) {
       console.error("API /cart/count retornou erro:", res.status);
-      return 0;
+      return null;
     }
 
     const cartItemCount: number = await res.json();
@@ -24,6 +26,6 @@ export async function getCartItemCount(): Promise<number> {
     return cartItemCount;
   } catch (err) {
     console.error(err);
-    return 0;
+    return null;
   }
 }

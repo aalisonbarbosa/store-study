@@ -1,15 +1,9 @@
 import ProductForm from "@/components/shared/product-form";
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 import Link from "next/link";
 
 export default async function NewProductPage() {
-  let session;
-
-  try {
-    session = await getSession();
-  } catch (err) {
-    console.error(err);
-  }
+  const session = await getSession();
 
   return (
     <div className="p-8 space-y-8">

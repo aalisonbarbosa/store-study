@@ -1,11 +1,13 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 import { CartBase } from "../types/cart-base";
 
 export async function getCart(): Promise<CartBase | null> {
   try {
     const session = await getSession();
+
+    if (!session?.user.accessToken) return null;
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart`, {
       headers: {
@@ -14,6 +16,11 @@ export async function getCart(): Promise<CartBase | null> {
       cache: "no-store",
       next: { tags: ["products-cart"] },
     });
+
+    if (!res.ok) {
+      console.error("API /cart retornou erro:", res.status);
+      return null;
+    }
 
     const cart: CartBase = await res.json();
 

@@ -1,11 +1,13 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 import { ProductBase } from "../types/product-base";
 
-export async function getProductsBySeller(): Promise<ProductBase[]> {
+export async function getProductsBySeller(): Promise<ProductBase[] | null> {
   try {
     const session = await getSession();
+
+    if (!session?.user.accessToken) return null;
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/user/${session.user.id}/products`,
@@ -20,7 +22,7 @@ export async function getProductsBySeller(): Promise<ProductBase[]> {
 
     if (!res.ok) {
       console.error("API /user/:id/products retornou erro:", res.status);
-      return [];
+      return null;
     }
 
     const products = await res.json();
@@ -28,6 +30,6 @@ export async function getProductsBySeller(): Promise<ProductBase[]> {
     return products;
   } catch (err) {
     console.error(err);
-    return [];
+    return null;
   }
 }

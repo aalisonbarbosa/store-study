@@ -1,11 +1,13 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 import { revalidateTag } from "next/cache";
 
 export async function decrementProductInCart(productId: string) {
   try {
     const session = await getSession();
+
+    if (!session?.user.accessToken) return;
 
     await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/cart/items/${productId}/decrement`,

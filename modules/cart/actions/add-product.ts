@@ -1,12 +1,14 @@
 "use server";
 
-import { getSession } from "@/lib/auth";
+import { getSession } from "@/lib/get-session";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function addProductToCart(productId: string) {
   try {
     const session = await getSession();
+
+    if (!session) redirect("/login");
 
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/items`, {
       method: "POST",
@@ -20,6 +22,5 @@ export async function addProductToCart(productId: string) {
     revalidateTag("products-cart");
   } catch (err) {
     console.error(err);
-    redirect("/login");
   }
 }
