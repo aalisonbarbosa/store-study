@@ -1,15 +1,9 @@
-import Header from "@/components/client/client-header";
+import Header from "@/components/layout/header/client-header";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { Inter } from "next/font/google";
 import { getCart } from "@/modules/cart";
 import { CartProvider } from "@/context/cart-context";
-
-const inter = Inter({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
 
 export default async function ClientLayout({
   children,
@@ -34,7 +28,7 @@ export default async function ClientLayout({
   }
 
   return (
-    <html lang="pt-br" className={inter.className}>
+    <html>
       <body>
         <CartProvider initialCart={cart}>
           <Header />

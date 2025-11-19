@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 
-import CartItem from "@/components/client/cart-item";
+import CartItem from "@/components/cart/cart-item";
 import { useCart } from "@/context/cart-context";
 
 export default function CartPage() {

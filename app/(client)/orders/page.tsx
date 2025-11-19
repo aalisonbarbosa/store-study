@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import OrderTable from "@/components/client/orders-table";
+import OrderTable from "@/components/orders/orders-table";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

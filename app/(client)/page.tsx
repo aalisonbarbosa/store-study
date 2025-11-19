@@ -2,8 +2,8 @@ import { getApprovedProducts } from "@/modules/products";
 
 import { ProductCard as IProductCard } from "@/modules/products";
 
-import FiltersPanel from "@/components/client/filters-panel";
-import ProductCard from "@/components/client/product-card";
+import FiltersPanel from "@/components/product/filters-panel";
+import ProductCard from "@/components/product/product-card";
 
 export default async function Home() {
   const products: IProductCard[] = await getApprovedProducts();

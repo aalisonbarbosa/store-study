@@ -13,7 +13,7 @@ export default function AddToCart({ product }: { product: ProductCard}) {
         dispatch({ type: "add-item", item: product });
         addProductToCart(product.id);
       }}
-      className="text-sm bg-blue-700 text-stone-50 p-2 rounded-md z-20 cursor-pointer"
+      className="text-sm bg-blue-700 text-stone-50 p-2 rounded-md cursor-pointer"
     >
       Adicionar
     </button>

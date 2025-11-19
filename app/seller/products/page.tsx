@@ -1,5 +1,5 @@
-import ProductsTable from "@/components/shared/products-table";
-import { ProductsTableSkeleton } from "@/components/shared/products-table/products-table-skeleton";
+import ProductsTable from "@/components/product/products-table";
+import { ProductsTableSkeleton } from "@/components/product/products-table/products-table-skeleton";
 import Link from "next/link";
 import { Suspense } from "react";
 

@@ -1,14 +1,8 @@
-import Header from "@/components/admin/admin-header";
-import SideBar from "@/components/shared/sidebar";
+import Header from "@/components/layout/header/admin-header";
+import SideBar from "@/components/layout/sidebar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-});
 
 export default async function SellerLayout({
   children,
@@ -33,7 +27,7 @@ export default async function SellerLayout({
   }
 
   return (
-    <html lang="pt-br" className={inter.className}>
+    <html>
       <body>
         <div className="grid grid-cols-5">
           <SideBar user={{ name: session.user.name!, role: "SELLER" }} />

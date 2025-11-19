@@ -11,7 +11,7 @@ export default async function Header() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="flex justify-around items-center h-20 border-b border-stone-200">
+    <header className="sticky top-0 bg-white flex justify-around items-center h-20 border-b border-stone-200 z-10">
       <Link href="/">
         <h1 className="font-bold text-2xl text-blue-700">Store Study</h1>
       </Link>

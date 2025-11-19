@@ -1,4 +1,4 @@
-import ProductForm from "@/components/shared/product-form";
+import ProductForm from "@/components/product/product-form";
 import { getSession } from "@/lib/get-session";
 import Link from "next/link";
 
