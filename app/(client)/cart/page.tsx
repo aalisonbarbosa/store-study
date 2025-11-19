@@ -1,21 +1,13 @@
-import { getServerSession } from "next-auth";
+"use client";
+
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 
-import { getCart } from "@/modules/cart/actions/get-cart";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
-import { CartBase } from "@/modules/cart";
-
 import CartItem from "@/components/client/cart-item";
+import { useCart } from "@/context/cart-context";
 
-export default async function CartPage() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) redirect("/");
-
-  const cart: CartBase | null = await getCart();
+export default function CartPage() {
+  const cart = useCart();
 
   const total = cart?.CartItem.reduce(
     (ac, c) => ac + c.Product.price * c.quantity,

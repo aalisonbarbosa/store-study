@@ -1,5 +1,6 @@
 "use client";
 
+import { useCartDispatch } from "@/context/cart-context";
 import {
   addProductToCart,
   CartItem,
@@ -7,27 +8,29 @@ import {
   removeProductFromCart,
 } from "@/modules/cart";
 import { Plus, Minus, Trash2 } from "lucide-react";
-import { useState } from "react";
 
 export default function CartItemQuantity({ item }: { item: CartItem }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const dispatch = useCartDispatch();
 
   return (
     <div className="flex items-center gap-4">
       <button
         onClick={() => {
-          setQuantity((prev) => --prev);
+          dispatch({ type: "decrement", id: item.id });
           decrementProductInCart(item.Product.id);
         }}
-        disabled={quantity === 1}
+        disabled={item.quantity === 1}
         className="p-2 border border-stone-200 rounded-full cursor-pointer"
       >
         <Minus size={16} />
       </button>
-      <div>{quantity}</div>
+      <div>{item.quantity}</div>
       <button
         onClick={() => {
-          setQuantity((prev) => ++prev);
+          dispatch({
+            type: "increment",
+            id: item.id,
+          });
           addProductToCart(item.Product.id);
         }}
         className="p-2 border border-stone-200 rounded-full cursor-pointer"
@@ -35,7 +38,10 @@ export default function CartItemQuantity({ item }: { item: CartItem }) {
         <Plus size={16} />
       </button>
       <button
-        onClick={() => removeProductFromCart(item.Product.id)}
+        onClick={() => {
+          dispatch({ type: "delete-item", id: item.id });
+          removeProductFromCart(item.Product.id);
+        }}
         className="text-red-500 cursor-pointer"
       >
         <Trash2 />

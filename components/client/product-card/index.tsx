@@ -25,7 +25,7 @@ export default function ProductCard({ product }: { product: ProductCard }) {
                 currency: "BRL",
               })}
             </span>
-            <AddToCart productId={product.id} />
+            <AddToCart product={product} />
           </div>
         </div>
       </div>
